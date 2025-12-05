@@ -1,1 +1,122 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root {
+  --sage: #dfe9df;
+  --sage-deep: #c8d6c4;
+  --olive: #4f6b3c;
+  --olive-deep: #3f5530;
+  --leaf: #7b9b53;
+  --pearl: #fffdf7;
+  --sand: #f3ecdf;
+  --text: #3f4738;
+  --text-soft: #5c6553;
+  --text-muted: #86907e;
+  --border: #e6dfd2;
+  --border-light: #efe8dc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Quicksand', 'Noto Sans JP', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at 15% 20%, #dfe9df 0, #e9f0e8 32%, #f8f3ea 62%, #ece3d6 100%);
+  color: var(--text);
+}
+
+.botanical-shell {
+  background: radial-gradient(circle at 15% 20%, #dfe9df 0, #e9f0e8 32%, #f9f4ea 62%, #ece3d6 100%);
+  color: var(--text);
+}
+
+.botanical-panel {
+  background: rgba(255, 253, 247, 0.92);
+}
+
+.botanical-soft {
+  background: rgba(240, 236, 226, 0.88);
+}
+
+.botanical-hover:hover {
+  background: rgba(231, 239, 231, 0.9);
+}
+
+.botanical-active {
+  background: rgba(224, 234, 224, 0.92);
+}
+
+.botanical-text {
+  color: var(--text);
+}
+
+.botanical-text-soft {
+  color: var(--text-soft);
+}
+
+.botanical-muted {
+  color: var(--text-muted);
+}
+
+.botanical-border {
+  border-color: var(--border);
+}
+
+.botanical-border-light {
+  border-color: var(--border-light);
+}
+
+.botanical-card {
+  background: rgba(255, 253, 247, 0.96);
+  box-shadow: 0 20px 60px rgba(68, 87, 56, 0.18);
+}
+
+.botanical-input {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.botanical-accent {
+  background: linear-gradient(135deg, var(--olive), var(--leaf));
+  color: #fdfaf3;
+}
+
+.botanical-accent-hover:hover {
+  background: linear-gradient(135deg, #567443, #87a35d);
+}
+
+.botanical-accent-text {
+  color: var(--olive);
+}
+
+.botanical-chip {
+  background: linear-gradient(135deg, #f3e7cf, #fdf9ee);
+  color: var(--text-soft);
+}
+
+.botanical-chat {
+  background-image: radial-gradient(rgba(133, 154, 124, 0.12) 1px, transparent 0);
+  background-size: 22px 22px;
+  background-color: rgba(255, 253, 247, 0.9);
+}
+
+.botanical-pill {
+  background: #e9f0e8;
+  color: var(--olive);
+  border-radius: 9999px;
+  padding: 0.35rem 0.9rem;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+.botanical-heading {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  letter-spacing: 0.02em;
+}
+
+.botanical-avatar-ring {
+  box-shadow: 0 10px 30px rgba(68, 87, 56, 0.15);
+}
