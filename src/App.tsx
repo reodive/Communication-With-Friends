@@ -103,44 +103,6 @@ const COLOR_OPTIONS = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#
 
 const APP_ID = 'devstream-app';
 
-// Theme configuration
-const themes = {
-  dark: {
-    bg: 'bg-zinc-950',
-    bgSecondary: 'bg-zinc-900/95',
-    bgTertiary: 'bg-zinc-800/80',
-    bgHover: 'hover:bg-zinc-800/70',
-    bgActive: 'bg-zinc-800/90',
-    border: 'border-zinc-800',
-    borderLight: 'border-zinc-700/50',
-    text: 'text-zinc-100',
-    textSecondary: 'text-zinc-300',
-    textMuted: 'text-zinc-500',
-    accent: 'bg-[#4f6b3c]',
-    accentHover: 'hover:bg-[#3f5530]',
-    accentText: 'text-[#9bc28a]',
-    input: 'bg-zinc-900 border-zinc-700',
-    card: 'bg-zinc-900/50',
-  },
-  light: {
-    bg: 'botanical-shell',
-    bgSecondary: 'botanical-panel',
-    bgTertiary: 'botanical-soft',
-    bgHover: 'botanical-hover',
-    bgActive: 'botanical-active',
-    border: 'botanical-border',
-    borderLight: 'botanical-border-light',
-    text: 'botanical-text',
-    textSecondary: 'botanical-text-soft',
-    textMuted: 'botanical-muted',
-    accent: 'botanical-accent',
-    accentHover: 'botanical-accent-hover',
-    accentText: 'botanical-accent-text',
-    input: 'botanical-input',
-    card: 'botanical-card',
-  },
-};
-
 function App() {
   // ============================================
   // State
@@ -152,10 +114,6 @@ function App() {
   const [userName, setUserName] = useState<string>('');
   const [isUserNameSet, setIsUserNameSet] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
-
-  // Theme
-  const [theme, setTheme] = useState<Theme>('light');
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
 
   // User settings
   const [userSettings, setUserSettings] = useState<UserSettings>({
@@ -747,46 +705,33 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
   // ============================================
   if (!isConfigured) {
     return (
-      <div className="min-h-screen botanical-shell flex items-center justify-center p-4">
-        <div className={`${resolvedTheme === 'dark' ? 'bg-zinc-900/90 border-zinc-800' : 'botanical-card botanical-border'} border rounded-3xl p-8 max-w-lg w-full shadow-2xl`}>
+      <div className="h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+        <div className="bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 max-w-lg w-full shadow-2xl border border-gray-700/50">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#e8f3e6] to-[#f6efe2] flex items-center justify-center botanical-avatar-ring">
-              <span className="text-3xl">🌿</span>
-            </div>
-            <h1 className="text-2xl botanical-heading tracking-tight">Garden Chat</h1>
-            <p className={`${resolvedTheme === 'dark' ? 'text-zinc-500' : 'botanical-text-soft'} text-sm mt-1`}>緑の空気でチャットを始めましょう</p>
+            <div className="text-5xl mb-4">⚡</div>
+            <h1 className="text-3xl font-bold text-white mb-2">DevStream</h1>
+            <p className="text-gray-400">Configure your workspace</p>
           </div>
 
           <div className="space-y-5">
             <div>
-              <label className={`block text-xs font-medium ${resolvedTheme === 'dark' ? 'text-zinc-400' : 'botanical-muted'} mb-2 uppercase tracking-wide`}>Firebase Config</label>
-              <textarea value={firebaseConfig} onChange={(e) => setFirebaseConfig(e.target.value)} className={`w-full h-28 ${resolvedTheme === 'dark' ? 'bg-zinc-800 text-white border-zinc-700 focus:border-[#4f6b3c]' : 'botanical-input focus:border-[#4f6b3c]'} rounded-2xl p-3 border outline-none font-mono text-sm transition-colors resize-none`} placeholder='{"apiKey": "...", ...}' />
+              <label className="block text-sm font-medium text-gray-300 mb-2">Firebase Config (JSON)</label>
+              <textarea value={firebaseConfig} onChange={(e) => setFirebaseConfig(e.target.value)} className="w-full h-32 bg-gray-900/50 text-white rounded-xl p-3 border border-gray-600/50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none font-mono text-sm transition-all" placeholder='{"apiKey": "...", ...}' />
             </div>
             <div>
-              <label className={`block text-xs font-medium ${resolvedTheme === 'dark' ? 'text-zinc-400' : 'botanical-muted'} mb-2 uppercase tracking-wide`}>Gemini API Key</label>
-              <input type="password" value={geminiApiKey} onChange={(e) => setGeminiApiKey(e.target.value)} className={`w-full ${resolvedTheme === 'dark' ? 'bg-zinc-800 text-white border-zinc-700 focus:border-[#4f6b3c]' : 'botanical-input focus:border-[#4f6b3c]'} rounded-2xl p-3 border outline-none transition-colors`} placeholder="Enter your Gemini API key" />
+              <label className="block text-sm font-medium text-gray-300 mb-2">Gemini API Key</label>
+              <input type="password" value={geminiApiKey} onChange={(e) => setGeminiApiKey(e.target.value)} className="w-full bg-gray-900/50 text-white rounded-xl p-3 border border-gray-600/50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all" placeholder="Enter your Gemini API key" />
             </div>
-
-            <label className={`flex items-center gap-3 ${resolvedTheme === 'dark' ? 'text-zinc-400' : 'botanical-text'} cursor-pointer group`}>
-              <div className={`w-5 h-5 rounded flex items-center justify-center transition-all ${rememberMe ? 'botanical-accent' : resolvedTheme === 'dark' ? 'bg-zinc-700' : 'bg-stone-200'}`}>
+            <label className="flex items-center gap-3 text-gray-300 cursor-pointer group">
+              <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${rememberMe ? 'bg-indigo-600 border-indigo-600' : 'border-gray-500 group-hover:border-indigo-500'}`}>
                 {rememberMe && <span className="text-white text-xs">✓</span>}
               </div>
               <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} className="hidden" />
               <span className="text-sm">Remember me</span>
             </label>
-
-            <button onClick={initializeFirebase} disabled={!firebaseConfig} className="w-full botanical-accent botanical-accent-hover disabled:bg-zinc-700 disabled:cursor-not-allowed text-white font-medium py-3 rounded-2xl transition-all shadow-lg">
-              Connect to the Garden
+            <button onClick={initializeFirebase} disabled={!firebaseConfig} className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/25">
+              Connect to Workspace
             </button>
-
-            {/* Theme selector */}
-            <div className="flex justify-center gap-2 pt-2">
-              {(['light', 'dark', 'system'] as const).map((t) => (
-                <button key={t} onClick={() => changeTheme(t)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${theme === t ? 'botanical-accent text-white' : resolvedTheme === 'dark' ? 'bg-zinc-800 text-zinc-400 hover:text-white' : 'bg-white/70 text-stone-600 hover:text-stone-900 border border-stone-200'}`}>
-                  {t === 'light' ? '☀️' : t === 'dark' ? '🌙' : '💻'} {t.charAt(0).toUpperCase() + t.slice(1)}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -798,11 +743,11 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
   // ============================================
   if (!isUserNameSet) {
     return (
-      <div className="min-h-screen botanical-shell flex items-center justify-center p-4">
-        <div className={`${resolvedTheme === 'dark' ? 'bg-zinc-900/90 border-zinc-800' : 'botanical-card botanical-border'} border rounded-3xl p-8 max-w-md w-full shadow-2xl`}>
+      <div className="h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+        <div className="bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-700/50">
           <div className="text-center mb-8">
-            <h1 className="text-2xl botanical-heading tracking-tight">ようこそ</h1>
-            <p className={`${resolvedTheme === 'dark' ? 'text-zinc-500' : 'botanical-text-soft'} text-sm mt-1`}>自然な雰囲気のアバターを選んでください</p>
+            <h1 className="text-3xl font-bold text-white mb-2">Welcome to DevStream</h1>
+            <p className="text-gray-400">Customize your profile</p>
           </div>
 
           <form onSubmit={(e) => { e.preventDefault(); handleSetUserName(); }} className="space-y-6">
@@ -816,7 +761,7 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
               <label className={`block text-xs ${resolvedTheme === 'dark' ? 'text-zinc-500' : 'text-stone-500'} mb-3 uppercase tracking-wide font-medium`}>Avatar</label>
               <div className="flex flex-wrap gap-2 justify-center">
                 {AVATAR_OPTIONS.map((avatar) => (
-                  <button key={avatar} type="button" onClick={() => setUserSettings(s => ({ ...s, avatar }))} className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-all ${userSettings.avatar === avatar ? 'ring-2 ring-[#4f6b3c] ring-offset-2 ' + (resolvedTheme === 'dark' ? 'ring-offset-zinc-900 bg-zinc-700' : 'ring-offset-white bg-stone-200') : resolvedTheme === 'dark' ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-stone-100 hover:bg-stone-200'}`}>
+                  <button key={avatar} type="button" onClick={() => setUserSettings(s => ({ ...s, avatar }))} className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl transition-all ${userSettings.avatar === avatar ? 'bg-indigo-600 ring-2 ring-indigo-400' : 'bg-gray-700 hover:bg-gray-600'}`}>
                     {avatar}
                   </button>
                 ))}
@@ -824,7 +769,7 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
             </div>
 
             <div>
-              <label className={`block text-xs ${resolvedTheme === 'dark' ? 'text-zinc-500' : 'botanical-muted'} mb-3 uppercase tracking-wide font-medium`}>Color</label>
+              <label className="block text-sm text-gray-400 mb-2">Choose Color</label>
               <div className="flex flex-wrap gap-2 justify-center">
                 {COLOR_OPTIONS.map((color) => (
                   <button key={color} type="button" onClick={() => setUserSettings(s => ({ ...s, color }))} className={`w-8 h-8 rounded-full transition-all ${userSettings.color === color ? 'ring-2 ring-offset-2 ' + (resolvedTheme === 'dark' ? 'ring-white ring-offset-zinc-900' : 'ring-stone-900 ring-offset-white') : 'hover:scale-110'}`} style={{ backgroundColor: color }} />
@@ -832,10 +777,10 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
               </div>
             </div>
 
-            <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className={`w-full ${resolvedTheme === 'dark' ? 'bg-zinc-800 text-white border-zinc-700 focus:border-[#4f6b3c]' : 'botanical-input focus:border-[#4f6b3c]'} rounded-2xl p-3 border outline-none text-center transition-colors`} placeholder="Your name" autoFocus />
+            <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="w-full bg-gray-900/50 text-white rounded-xl p-3 border border-gray-600/50 focus:border-indigo-500 outline-none text-center text-lg" placeholder="Your display name" autoFocus />
 
-            <button type="submit" disabled={!userName.trim()} className="w-full botanical-accent botanical-accent-hover disabled:bg-zinc-700 text-white font-medium py-3 rounded-2xl transition-all shadow-lg">
-              Continue
+            <button type="submit" disabled={!userName.trim()} className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:from-gray-600 disabled:to-gray-600 text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/25">
+              Enter Workspace
             </button>
           </form>
         </div>
@@ -847,40 +792,22 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
   // Main App
   // ============================================
   return (
-    <div className={`min-h-screen ${t.bg} ${t.text} flex items-center justify-center p-4 overflow-hidden transition-colors duration-200`}>
-      <div className={`w-full max-w-6xl h-full rounded-[32px] shadow-[0_30px_80px_rgba(68,87,56,0.18)] border ${t.borderLight} ${t.bgSecondary} backdrop-blur-sm flex flex-col overflow-hidden`}>
+    <div className="h-screen flex flex-col bg-gray-900 text-gray-100 overflow-hidden">
       {/* Header */}
-      <header className={`h-16 ${t.bgSecondary} border-b ${t.border} flex items-center px-6 flex-shrink-0`}>
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#eef4e9] to-[#f3e8d7] flex items-center justify-center botanical-avatar-ring">
-            <span className="text-lg">🌱</span>
-          </div>
-          <div>
-            <div className="botanical-heading text-lg leading-none">Garden Chat</div>
-            <div className="text-[11px] uppercase tracking-[0.1em] botanical-muted flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-[#4f6b3c] inline-block" /> online
-            </div>
-          </div>
+      <header className="h-12 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700/50 flex items-center px-4 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <span className="text-xl">⚡</span>
+          <span className="font-bold text-white">DevStream</span>
         </div>
 
         {isVPN && (
-          <div className="ml-4 px-3 py-1 bg-emerald-500/10 text-emerald-600 rounded-full text-xs font-medium flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            VPN Active
+          <div className="ml-4 px-2 py-1 bg-amber-500/20 text-amber-400 rounded-full text-xs flex items-center gap-1">
+            <span>🔒</span> VPN Detected
           </div>
         )}
 
-        <div className="ml-auto flex items-center gap-2">
-          {/* Theme Toggle */}
-          <div className={`flex items-center ${t.bgTertiary} rounded-full p-1 border ${t.borderLight}`}>
-            {(['light', 'dark', 'system'] as const).map((th) => (
-              <button key={th} onClick={() => changeTheme(th)} className={`px-2.5 py-1 rounded-full text-xs transition-all ${theme === th ? 'botanical-accent text-white shadow-sm' : t.textMuted + ' ' + t.bgHover}`} title={th.charAt(0).toUpperCase() + th.slice(1)}>
-                {th === 'light' ? '☀️' : th === 'dark' ? '🌙' : '💻'}
-              </button>
-            ))}
-          </div>
-
-          <kbd className={`hidden sm:inline-flex items-center gap-1 px-2 py-1 ${t.bgTertiary} rounded text-xs ${t.textMuted}`}>
+        <div className="ml-auto flex items-center gap-3">
+          <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 bg-gray-700/50 rounded text-xs text-gray-400">
             <span>⌘</span>K
           </kbd>
           <button onClick={() => setShowCommandPalette(true)} className={`p-2 rounded-lg ${t.bgHover} ${t.textSecondary} transition-colors`}>
@@ -889,8 +816,8 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
           <button onClick={() => setShowSettings(true)} className={`p-2 rounded-lg ${t.bgHover} ${t.textSecondary} transition-colors`}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
           </button>
-          <div className={`flex items-center gap-2 ml-2 pl-2 border-l ${t.borderLight}`}>
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm shadow-sm" style={{ backgroundColor: userSettings.color }}>
+          <div className="flex items-center gap-2 ml-2">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm" style={{ backgroundColor: userSettings.color }}>
               {userSettings.avatar}
             </div>
             <span className={`text-sm font-medium hidden sm:inline ${t.textSecondary}`}>{userName}</span>
@@ -908,28 +835,26 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
             </div>
 
             {showChannelForm && (
-              <form onSubmit={createChannel} className="mb-3 px-2">
-                <input type="text" value={newChannelName} onChange={(e) => setNewChannelName(e.target.value)} className={`w-full ${t.input} rounded-lg px-3 py-2 text-sm border outline-none`} placeholder="channel-name" autoFocus />
-                <div className="flex gap-2 mt-2">
-                  <button type="submit" disabled={!newChannelName.trim()} className="flex-1 botanical-accent botanical-accent-hover disabled:bg-zinc-700 text-white text-xs py-1.5 rounded-lg transition-colors">Create</button>
-                  <button type="button" onClick={() => { setShowChannelForm(false); setNewChannelName(''); }} className={`flex-1 ${t.bgTertiary} ${t.textSecondary} text-xs py-1.5 rounded-lg`}>Cancel</button>
+              <form onSubmit={createChannel} className="mb-2 px-2">
+                <input type="text" value={newChannelName} onChange={(e) => setNewChannelName(e.target.value)} className="w-full bg-gray-700 text-white rounded px-2 py-1 text-sm border border-gray-600" placeholder="channel-name" autoFocus />
+                <div className="flex gap-1 mt-1">
+                  <button type="submit" disabled={!newChannelName.trim()} className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 text-white text-xs py-1 rounded">Create</button>
+                  <button type="button" onClick={() => { setShowChannelForm(false); setNewChannelName(''); }} className="flex-1 bg-gray-600 text-white text-xs py-1 rounded">Cancel</button>
                 </div>
               </form>
             )}
 
-            <div className="space-y-0.5">
-              {channels.map((channel) => (
-                <div key={channel.id} className={`group flex items-center justify-between rounded-lg transition-all ${activeChannel === channel.name ? `${t.accentText} ${resolvedTheme === 'dark' ? 'bg-[#1f2a1c]' : 'bg-[#e9f0e8]'}` : `${t.textSecondary} ${t.bgHover}`}`}>
-                  <button onClick={() => setActiveChannel(channel.name)} className="flex-1 text-left px-3 py-2 flex items-center gap-2 text-sm">
-                    <span className="opacity-50">#</span>
-                    <span className="truncate">{channel.name}</span>
-                  </button>
-                  {channel.name !== 'general' && (
-                    <button onClick={() => deleteChannel(channel.id, channel.name)} className="px-2 text-zinc-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">×</button>
-                  )}
-                </div>
-              ))}
-            </div>
+            {channels.map((channel) => (
+              <div key={channel.id} className={`group flex items-center justify-between rounded-lg mb-1 transition-all ${activeChannel === channel.name ? 'bg-indigo-600/80 text-white' : 'text-gray-400 hover:bg-gray-700/50'}`}>
+                <button onClick={() => setActiveChannel(channel.name)} className="flex-1 text-left px-3 py-2 flex items-center gap-2">
+                  <span className="opacity-60">#</span>
+                  {channel.name}
+                </button>
+                {channel.name !== 'general' && (
+                  <button onClick={() => deleteChannel(channel.id, channel.name)} className="px-2 text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100">×</button>
+                )}
+              </div>
+            ))}
 
             {/* Online Users Preview */}
             <div className={`mt-6 pt-4 border-t ${t.borderLight}`}>
@@ -972,15 +897,14 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
             <span className={`${t.textMuted} mr-2 text-lg`}>#</span>
             <h2 className="font-semibold">{activeChannel}</h2>
             <div className="ml-auto flex items-center gap-2">
-              <button onClick={summarizeConversation} disabled={isAiLoading} className={`px-4 py-1.5 botanical-accent botanical-accent-hover disabled:bg-zinc-700 text-white text-sm font-medium rounded-lg flex items-center gap-2 transition-all shadow-md`}>
-                {isAiLoading ? <span className="animate-spin">⏳</span> : <span>✨</span>}
-                <span className="hidden sm:inline">Summarize</span>
+              <button onClick={summarizeConversation} disabled={isAiLoading} className="px-3 py-1.5 bg-indigo-600/80 hover:bg-indigo-600 disabled:bg-gray-600 text-white text-sm rounded-lg flex items-center gap-2 transition-all">
+                {isAiLoading ? '⏳' : '✨'} Summarize
               </button>
             </div>
           </div>
 
-          {/* Messages */}
-          <div className={`flex-1 overflow-y-auto p-5 space-y-4 ${resolvedTheme === 'dark' ? t.bg : 'botanical-chat'}`}>
+          {/* Messages - Fixed height with scroll */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.length === 0 && (
               <div className="text-center py-16">
                 <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl ${t.bgTertiary} flex items-center justify-center`}>
@@ -992,9 +916,9 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
             )}
 
             {messages.map((message) => (
-              <div key={message.id} className={`flex gap-3 ${message.isBot ? `${resolvedTheme === 'dark' ? 'bg-[#1f2a1c]' : 'bg-[#e9f0e8]'} -mx-5 px-5 py-4 border-l-2 border-[#4f6b3c]` : ''}`}>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm flex-shrink-0 shadow-sm ${message.isBot ? 'bg-gradient-to-br from-[#e8f3e6] via-[#f0e7d6] to-[#cfdcc8]' : ''}`} style={!message.isBot ? { backgroundColor: onlineUsers.find(u => u.name === message.userName)?.color || (resolvedTheme === 'dark' ? '#3f3f46' : '#d4d4d8') } : undefined}>
-                  {message.isBot ? '✨' : onlineUsers.find(u => u.name === message.userName)?.avatar || message.userName.charAt(0).toUpperCase()}
+              <div key={message.id} className={`flex gap-3 ${message.isBot ? 'bg-indigo-500/5 -mx-4 px-4 py-3 rounded-lg' : ''}`}>
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm flex-shrink-0 ${message.isBot ? 'bg-gradient-to-br from-purple-500 to-indigo-600' : ''}`} style={!message.isBot ? { backgroundColor: onlineUsers.find(u => u.name === message.userName)?.color || '#4b5563' } : undefined}>
+                  {message.isBot ? '🤖' : onlineUsers.find(u => u.name === message.userName)?.avatar || message.userName.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2">
@@ -1015,7 +939,7 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
 
             {isTyping && (
               <div className="flex gap-3 items-center">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#e8f3e6] via-[#f2e7d5] to-[#d1dec8] flex items-center justify-center shadow-sm">✨</div>
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">🤖</div>
                 <div className="flex gap-1">
                   {[0, 150, 300].map((delay) => (
                     <span key={delay} className={`w-2 h-2 ${resolvedTheme === 'dark' ? 'bg-zinc-500' : 'bg-stone-400'} rounded-full animate-bounce`} style={{ animationDelay: `${delay}ms` }} />
@@ -1030,13 +954,9 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
           <form onSubmit={sendMessage} className={`p-4 border-t ${t.border} ${t.bgSecondary} flex-shrink-0`}>
             <div className="flex gap-2">
               <input type="file" ref={chatFileInputRef} onChange={handleChatFileUpload} className="hidden" accept=".txt,.js,.ts,.jsx,.tsx,.py,.java,.c,.cpp,.css,.html,.json,.md" />
-              <button type="button" onClick={() => chatFileInputRef.current?.click()} className={`px-3 ${t.bgTertiary} ${t.textMuted} hover:${t.text} rounded-lg transition-colors`}>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
-              </button>
-              <input ref={messageInputRef} type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} className={`flex-1 ${t.input} rounded-lg px-4 py-2.5 border outline-none focus:border-[#4f6b3c] transition-colors`} placeholder={`Message #${activeChannel}`} />
-              <button type="submit" disabled={!newMessage.trim()} className="px-5 botanical-accent botanical-accent-hover disabled:bg-zinc-700 text-white font-medium rounded-lg transition-all shadow-md">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
-              </button>
+              <button type="button" onClick={() => chatFileInputRef.current?.click()} className="px-3 bg-gray-700/50 hover:bg-gray-700 text-gray-400 hover:text-white rounded-lg transition-all">📎</button>
+              <input ref={messageInputRef} type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} className="flex-1 bg-gray-700/50 text-white rounded-lg px-4 py-2.5 border border-gray-600/50 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 outline-none transition-all" placeholder={`Message #${activeChannel} (@AI for bot)`} />
+              <button type="submit" disabled={!newMessage.trim()} className="px-5 bg-indigo-600 hover:bg-indigo-500 disabled:bg-gray-600 text-white font-medium rounded-lg transition-all">Send</button>
             </div>
           </form>
         </div>
@@ -1045,8 +965,8 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
         <div className={`w-72 ${t.bgSecondary} border-l ${t.border} flex flex-col flex-shrink-0`}>
           <div className={`flex border-b ${t.border} flex-shrink-0`}>
             {(['tasks', 'files', 'users', 'summary', 'ai'] as const).map((tab) => (
-              <button key={tab} onClick={() => setRightPanelTab(tab)} className={`flex-1 py-3 text-xs font-medium transition-all ${rightPanelTab === tab ? `${t.accentText} border-b-2 border-[#4f6b3c] ${resolvedTheme === 'dark' ? 'bg-[#1f2a1c]' : 'bg-[#e9f0e8]'}` : `${t.textMuted} ${t.bgHover}`}`}>
-                {tab === 'users' ? '👥' : tab === 'tasks' ? '📋' : tab === 'files' ? '📁' : tab === 'summary' ? '📊' : '✨'}
+              <button key={tab} onClick={() => setRightPanelTab(tab)} className={`flex-1 py-2.5 text-xs font-medium transition-all ${rightPanelTab === tab ? 'text-indigo-400 border-b-2 border-indigo-400 bg-indigo-500/5' : 'text-gray-400 hover:text-gray-200'}`}>
+                {tab === 'users' ? '👥' : tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
             ))}
           </div>
@@ -1057,14 +977,14 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
               <div className="p-4">
                 <form onSubmit={addTask} className="mb-4">
                   <div className="flex gap-2">
-                    <input type="text" value={newTaskTitle} onChange={(e) => setNewTaskTitle(e.target.value)} className={`flex-1 ${t.input} rounded-lg px-3 py-2 border text-sm outline-none focus:border-[#4f6b3c]`} placeholder="Add task..." />
-                    <button type="submit" disabled={!newTaskTitle.trim()} className="px-3 botanical-accent botanical-accent-hover disabled:bg-zinc-700 text-white rounded-lg transition-colors shadow-sm">+</button>
+                    <input type="text" value={newTaskTitle} onChange={(e) => setNewTaskTitle(e.target.value)} className="flex-1 bg-gray-700/50 text-white rounded-lg px-3 py-2 border border-gray-600/50 text-sm" placeholder="Add task..." />
+                    <button type="submit" disabled={!newTaskTitle.trim()} className="px-3 bg-indigo-600 hover:bg-indigo-500 disabled:bg-gray-600 text-white rounded-lg">+</button>
                   </div>
                 </form>
 
                 <div className="flex gap-1 mb-4">
                   {(['all', 'active', 'completed'] as const).map((filter) => (
-                    <button key={filter} onClick={() => setTaskFilter(filter)} className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${taskFilter === filter ? 'botanical-accent text-white shadow-sm' : `${t.bgTertiary} ${t.textMuted} ${t.bgHover}`}`}>
+                    <button key={filter} onClick={() => setTaskFilter(filter)} className={`px-3 py-1 text-xs rounded-full transition-all ${taskFilter === filter ? 'bg-indigo-600 text-white' : 'bg-gray-700/50 text-gray-400 hover:text-white'}`}>
                       {filter.charAt(0).toUpperCase() + filter.slice(1)}
                     </button>
                   ))}
@@ -1075,8 +995,8 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
                   {filteredTasks.map((task) => (
                     <div key={task.id} className={`p-3 rounded-xl border transition-all ${task.completed ? `${t.bgTertiary} ${t.borderLight} opacity-60` : `${t.card} ${t.border}`}`}>
                       <div className="flex items-start gap-3">
-                        <button onClick={() => toggleTask(task.id, task.completed)} className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${task.completed ? 'bg-emerald-500 border-emerald-500 text-white' : `${resolvedTheme === 'dark' ? 'border-zinc-600' : 'border-stone-300'} hover:border-[#4f6b3c]`}`}>
-                          {task.completed && <span className="text-xs">✓</span>}
+                        <button onClick={() => toggleTask(task.id, task.completed)} className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${task.completed ? 'bg-green-600 border-green-600 text-white' : 'border-gray-500 hover:border-indigo-500'}`}>
+                          {task.completed && '✓'}
                         </button>
                         <div className="flex-1 min-w-0">
                           <p className={`text-sm ${task.completed ? `${t.textMuted} line-through` : ''}`}>{task.title}</p>
@@ -1206,9 +1126,8 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
             {rightPanelTab === 'ai' && (
               <div className="p-4 space-y-4">
                 <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept=".txt,.js,.ts,.py,.json,.md" className="hidden" />
-                <button onClick={() => fileInputRef.current?.click()} className={`w-full py-4 border-2 border-dashed ${resolvedTheme === 'dark' ? 'border-zinc-700 hover:border-[#4f6b3c]' : 'border-stone-300 hover:border-[#4f6b3c]'} rounded-xl ${t.textMuted} hover:${t.accentText} flex items-center justify-center gap-2 transition-all`}>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-                  Upload for Analysis
+                <button onClick={() => fileInputRef.current?.click()} className="w-full py-3 border-2 border-dashed border-gray-600 hover:border-indigo-500 rounded-lg text-gray-400 hover:text-indigo-400 flex items-center justify-center gap-2 transition-all">
+                  📁 Upload for Analysis
                 </button>
                 {uploadedFileName && (
                   <div className={`flex items-center justify-between ${t.card} border ${t.borderLight} rounded-lg px-3 py-2`}>
@@ -1216,10 +1135,9 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
                     <button onClick={clearFile} className={`${t.textMuted} hover:text-rose-500 ml-2`}>×</button>
                   </div>
                 )}
-                <textarea value={fileContent} onChange={(e) => setFileContent(e.target.value)} className={`w-full h-28 ${t.input} rounded-xl p-3 border font-mono text-sm resize-none outline-none focus:border-[#4f6b3c]`} placeholder="Or paste code here..." />
-                <button onClick={summarizeFile} disabled={!fileContent.trim() || isAiLoading} className="w-full py-2.5 botanical-accent botanical-accent-hover disabled:bg-zinc-700 text-white font-medium rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
-                  {isAiLoading ? <span className="animate-spin">⏳</span> : <span>✨</span>}
-                  Analyze
+                <textarea value={fileContent} onChange={(e) => setFileContent(e.target.value)} className="w-full h-28 bg-gray-700/50 text-white rounded-lg p-3 border border-gray-600/50 font-mono text-sm resize-none" placeholder="Or paste code..." />
+                <button onClick={summarizeFile} disabled={!fileContent.trim() || isAiLoading} className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 disabled:bg-gray-600 text-white rounded-lg transition-all">
+                  {isAiLoading ? '⏳ Analyzing...' : '✨ Analyze'}
                 </button>
                 {fileSummary && (
                   <div className={`p-4 ${t.card} border ${t.borderLight} rounded-xl`}>
@@ -1272,7 +1190,7 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
                 <label className={`block text-xs ${t.textMuted} mb-3 uppercase tracking-wide font-medium`}>Avatar</label>
                 <div className="flex flex-wrap gap-2">
                   {AVATAR_OPTIONS.map((avatar) => (
-                    <button key={avatar} onClick={() => setUserSettings(s => ({ ...s, avatar }))} className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-all ${userSettings.avatar === avatar ? 'ring-2 ring-[#4f6b3c] ring-offset-2 ' + (resolvedTheme === 'dark' ? 'ring-offset-zinc-900' : 'ring-offset-white') : `${t.bgTertiary} ${t.bgHover}`}`}>
+                    <button key={avatar} onClick={() => setUserSettings(s => ({ ...s, avatar }))} className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl transition-all ${userSettings.avatar === avatar ? 'bg-indigo-600 ring-2 ring-indigo-400' : 'bg-gray-700 hover:bg-gray-600'}`}>
                       {avatar}
                     </button>
                   ))}
@@ -1292,29 +1210,16 @@ Return JSON: {"decisions": [], "todos": [], "pending": []}`;
                 <label className={`block text-xs ${t.textMuted} mb-3 uppercase tracking-wide font-medium`}>Status</label>
                 <div className="flex gap-2">
                   {(['online', 'away', 'busy'] as const).map((status) => (
-                    <button key={status} onClick={() => setUserSettings(s => ({ ...s, status }))} className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 ${userSettings.status === status ? 'botanical-accent text-white' : `${t.bgTertiary} ${t.textSecondary}`}`}>
-                      <span className={`w-2 h-2 rounded-full ${status === 'online' ? 'bg-emerald-500' : status === 'away' ? 'bg-amber-500' : 'bg-rose-500'}`} />
-                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                    <button key={status} onClick={() => setUserSettings(s => ({ ...s, status }))} className={`flex-1 py-2 rounded-lg text-sm transition-all ${userSettings.status === status ? 'bg-indigo-600 text-white' : 'bg-gray-700 text-gray-400'}`}>
+                      {status === 'online' ? '🟢' : status === 'away' ? '🟡' : '🔴'} {status}
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-xs ${t.textMuted} mb-3 uppercase tracking-wide font-medium`}>Theme</label>
-                <div className="flex gap-2">
-                  {(['light', 'dark', 'system'] as const).map((th) => (
-                    <button key={th} onClick={() => changeTheme(th)} className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 ${theme === th ? 'botanical-accent text-white' : `${t.bgTertiary} ${t.textSecondary}`}`}>
-                      {th === 'light' ? '☀️' : th === 'dark' ? '🌙' : '💻'}
-                      {th.charAt(0).toUpperCase() + th.slice(1)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex gap-3 pt-2">
-                <button onClick={() => setShowSettings(false)} className={`flex-1 py-2.5 ${t.bgTertiary} ${t.text} font-medium rounded-xl transition-colors`}>Cancel</button>
-                <button onClick={saveSettings} className="flex-1 py-2.5 botanical-accent botanical-accent-hover text-white font-medium rounded-xl transition-colors shadow-md">Save</button>
+              <div className="flex gap-3 pt-4">
+                <button onClick={() => setShowSettings(false)} className="flex-1 py-2 bg-gray-700 text-white rounded-lg">Cancel</button>
+                <button onClick={saveSettings} className="flex-1 py-2 bg-indigo-600 text-white rounded-lg">Save</button>
               </div>
             </div>
           </div>
